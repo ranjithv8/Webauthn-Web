@@ -7,9 +7,10 @@ body {
 .webauthn-container {
   display: flex;
   flex-direction: column;
+  width: calc(100vw - 32px);
+  max-width: 600px;
+  box-sizing: border-box;
   margin: 32px auto;
-  width: 40vw;
-  min-width: 300px;
 }
 
 .webauthn-banner {
