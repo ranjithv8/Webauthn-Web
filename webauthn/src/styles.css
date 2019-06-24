@@ -1,0 +1,24 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
+  margin: 0;
+}
+
+.webauthn-container {
+  display: flex;
+  flex-direction: column;
+  margin: 32px auto;
+  width: 40vw;
+  min-width: 300px;
+}
+
+.webauthn-banner {
+  display:flex;
+  justify-content: center;
+  padding-top: 32px;
+}
+
+.webauthn-submit-container {
+  display:flex;
+  justify-content: flex-end;
+}

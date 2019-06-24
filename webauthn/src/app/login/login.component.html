@@ -1,0 +1,21 @@
+<mat-card class="webauthn-container">
+  <div [formGroup]="loginForm">
+    <mat-form-field class="webauthn-field">
+      <input type="text" formControlName="username" matInput placeholder="Username">
+    </mat-form-field>
+    <mat-form-field class="webauthn-field">
+      <input type="password" formControlName="password" matInput placeholder="Password">
+    </mat-form-field>
+    <div class="webauthn-submit-container">
+      <button mat-raised-button color="primary" class="webauthn-field">Login</button>
+    </div>
+  </div>
+  <span class="webauthn-banner">
+    Don't have an account? 
+    <a [routerLink]="['/register']">Register</a>
+  </span>
+</mat-card>
+
+
+
+
