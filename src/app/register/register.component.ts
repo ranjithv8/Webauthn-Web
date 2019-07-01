@@ -1,51 +1,62 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { RegisterService } from '../services/register.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  devLog: [any] = [null];
+  publicKeyOptions: any;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private registerService: RegisterService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
     this.registerForm = this.fb.group({
       'firstname': ['', [Validators.required]],
       'username': ['', [Validators.email, Validators.required]]
     });
+    this.registerService.getChallenge().subscribe((publicKeyOptions) => {
+      this.devLog.push(JSON.stringify(publicKeyOptions));
+      this.changeDetectorRef.markForCheck();
+      this.publicKeyOptions = publicKeyOptions;
+    });
   }
 
   onSubmit() {
+    this.publicKeyOptions.user.name = this.registerForm.get('username').value;
+    this.publicKeyOptions.user.displayName = this.registerForm.get('firstname').value;
+    this.publicKeyOptions.user.id = this.registerService.str2ab(this.publicKeyOptions.user.id);
+    this.publicKeyOptions.challenge = this.registerService.str2ab(this.publicKeyOptions.challenge);
+    delete this.publicKeyOptions.extensions;
+    this.publicKeyOptions = {
+      ...this.publicKeyOptions,
+      authenticatorSelection:{
+        authenticatorAttachment: "cross-platform",
+        requireResidentKey: true,
+        userVerification: "preferred"
+      },
+      timeout: 60000
+    }
     const createCredentialDefaultArgs = {
-      publicKey: {
-          rp: {
-              name: 'Acme'
-          },
-          user: {
-              id: new Uint8Array(16),
-              name: this.registerForm.get('username').value,
-              displayName: this.registerForm.get('firstname').value
-          },
-          pubKeyCredParams: [{
-              type: 'public-key',
-              alg: -7
-          }],
-          attestation: 'direct',
-          timeout: 60000,
-          challenge: new Uint8Array([ 
-              0x8C, 0x0A, 0x26, 0xFF, 0x22, 0x91, 0xC1, 0xE9, 0xB9, 0x4E, 0x2E, 0x17, 0x1A, 0x98, 0x6A, 0x73,
-              0x71, 0x9D, 0x43, 0x48, 0xD5, 0xA7, 0x6A, 0x15, 0x7E, 0x38, 0x94, 0x52, 0x77, 0x97, 0x0F, 0xEF
-          ]).buffer
-      }
+      publicKey: this.publicKeyOptions
     };
+    this.devLog.push(JSON.stringify(createCredentialDefaultArgs));
 
     const nav: any = navigator;
     nav.credentials.create(createCredentialDefaultArgs)
-      .then((cred) => {
-        console.log(cred);
+      .then((creds) => {
+        this.devLog.push(JSON.stringify(creds));
+        this.changeDetectorRef.markForCheck();
+        this.registerService.register(creds);
       })
       .catch((err) => {
           console.log('ERROR', err);

@@ -7,7 +7,7 @@
       <input type="text" formControlName="username" matInput placeholder="Username">
     </mat-form-field>
     <div class="webauthn-submit-container">
-      <button (click)="onSubmit()" mat-raised-button color="primary" class="webauthn-field">Register</button>
+      <button (click)="onSubmit()" [disabled]="!registerForm.valid" mat-raised-button color="primary" class="webauthn-field">Register</button>
     </div>
   </div>
   <span class="webauthn-banner">
@@ -15,5 +15,8 @@
     <a [routerLink]="['/login']">Login</a>
   </span>
 </mat-card>
+<div class="webauthn-log-container">
+  <li *ngFor="let log of devLog; index as i">({{i}}).{{log}}</li>
+</div>
   
   

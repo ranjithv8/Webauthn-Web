@@ -1,3 +1,24 @@
 .webauthn-field {
   display: block;
 }
+
+.webauthn-log-container {
+  height: 200px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: 1px 1px 6px 3px #ededed inset;
+  color: green;
+  font-family: monospace;
+  font-size: 13px;
+  background: #FFF;
+  width: calc(100vw - 24px);
+  margin: 10px auto;
+  word-break: break-word;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.webauthn-log-container li {
+  list-style: none;
+}
