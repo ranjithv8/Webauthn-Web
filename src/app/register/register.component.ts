@@ -38,7 +38,6 @@ export class RegisterComponent implements OnInit {
     this.publicKeyOptions.user.id = encoder.encode(this.publicKeyOptions.user.id);
     this.publicKeyOptions.challenge = encoder.encode(this.publicKeyOptions.challenge);
     this.publicKeyOptions.pubKeyCredParams.length = 1;
-    this.publicKeyOptions.rp.id = 'herokuapp';
     this.publicKeyOptions = {
       ...this.publicKeyOptions
     };
