@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     const encoder = new TextEncoder();
+    const decoder = new TextDecoder();
     this.publicKeyOptions.user.name = this.registerForm.get('username').value;
     this.publicKeyOptions.user.displayName = this.registerForm.get('firstname').value;
     this.publicKeyOptions.user.id = encoder.encode(this.publicKeyOptions.user.id);
@@ -49,12 +50,26 @@ export class RegisterComponent implements OnInit {
 
     const nav: any = navigator;
     nav.credentials.create(createCredentialDefaultArgs)
-      .then((creds) => {
-        this.devLog.push(JSON.stringify(creds));
+      .then((attestation) => {
+        const publicKeyCredential:any = {};
+        publicKeyCredential.id = attestation.id;
+        publicKeyCredential.type = attestation.type;
+        publicKeyCredential.rawId = (attestation.rawId);
+
+        const response:any = {};
+        response.clientDataJSON = decoder.decode(attestation.response.clientDataJSON);
+        response.attestationObject = decoder.decode(attestation.response.attestationObject);
+
+        publicKeyCredential.response = response;
+
+        this.devLog.push(JSON.stringify(publicKeyCredential));
         this.changeDetectorRef.markForCheck();
-        this.registerService.register(creds);
+        this.registerService.register(publicKeyCredential);
       })
-      .catch((err,thenga) => {
+      .then((registrationResposne) => {
+        this.devLog.push(JSON.stringify(registrationResposne));
+      })
+      .catch((err) => {
           this.devLog.push(err.message);
           this.changeDetectorRef.markForCheck();
           console.log('ERROR', err);
