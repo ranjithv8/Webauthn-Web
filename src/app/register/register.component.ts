@@ -70,9 +70,9 @@ export class RegisterComponent implements OnInit {
         this.devLog.push(JSON.stringify(registrationResposne));
       })
       .catch((err) => {
-          this.devLog.push(err.message);
-          this.changeDetectorRef.markForCheck();
-          console.log('ERROR', err);
+        this.devLog.push('Error'+err.message);
+        this.changeDetectorRef.markForCheck();
+        console.log('ERROR', err);
       });
   }
 }
