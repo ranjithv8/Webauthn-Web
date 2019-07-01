@@ -21,14 +21,4 @@ export class RegisterService {
   register (params) {
     return this.http.post(params, this.SERVER_CONTEXT + this.REGISTER_ENDPOINT);
   }
-
-  str2ab(str) {
-    debugger;
-    var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
-    var bufView = new Uint8Array(buf);
-    for (var i=0, strLen=str.length; i < strLen; i++) {
-      bufView[i] = str.charCodeAt(i);
-    }
-    return buf;
-  }
 }

@@ -32,20 +32,16 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    const encoder = new TextEncoder();
     this.publicKeyOptions.user.name = this.registerForm.get('username').value;
     this.publicKeyOptions.user.displayName = this.registerForm.get('firstname').value;
-    this.publicKeyOptions.user.id = this.registerService.str2ab(this.publicKeyOptions.user.id);
-    this.publicKeyOptions.challenge = this.registerService.str2ab(this.publicKeyOptions.challenge);
-    delete this.publicKeyOptions.extensions;
+    this.publicKeyOptions.user.id = encoder.encode(this.publicKeyOptions.user.id);
+    this.publicKeyOptions.challenge = encoder.encode(this.publicKeyOptions.challenge);
+    this.publicKeyOptions.pubKeyCredParams.length = 1;
+    this.publicKeyOptions.rp.id = 'herokuapp';
     this.publicKeyOptions = {
-      ...this.publicKeyOptions,
-      authenticatorSelection:{
-        authenticatorAttachment: "cross-platform",
-        requireResidentKey: true,
-        userVerification: "preferred"
-      },
-      timeout: 60000
-    }
+      ...this.publicKeyOptions
+    };
     const createCredentialDefaultArgs = {
       publicKey: this.publicKeyOptions
     };
@@ -58,7 +54,9 @@ export class RegisterComponent implements OnInit {
         this.changeDetectorRef.markForCheck();
         this.registerService.register(creds);
       })
-      .catch((err) => {
+      .catch((err,thenga) => {
+          this.devLog.push(err.message);
+          this.changeDetectorRef.markForCheck();
           console.log('ERROR', err);
       });
   }
