@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
         const publicKeyCredential:any = {};
         publicKeyCredential.id = attestation.id;
         publicKeyCredential.type = attestation.type;
-        publicKeyCredential.rawId = (attestation.rawId);
+        publicKeyCredential.rawId = attestation.rawId;
 
         const response:any = {};
         response.clientDataJSON = decoder.decode(attestation.response.clientDataJSON);

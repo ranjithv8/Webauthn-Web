@@ -19,6 +19,6 @@ export class RegisterService {
   }
 
   register (params) {
-    return this.http.post(params, this.SERVER_CONTEXT + this.REGISTER_ENDPOINT);
+    return this.http.post(this.SERVER_CONTEXT + this.REGISTER_ENDPOINT, params);
   }
 }

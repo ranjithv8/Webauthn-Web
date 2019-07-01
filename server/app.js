@@ -24,12 +24,15 @@ apiRouter.get('/get-challenge', (req, res, next) => {
 apiRouter.post('/register', (req, res, next) => {
   let opts = {
     method: 'POST',
-    uri: `${API_CONTEXT}/finifshRegistration`,
+    uri: `${API_CONTEXT}/finishRegistration`,
     body: req.body
   }
   request.post(opts,(err, response, body) => {
     console.log('response for finish Registration');
     console.log(response);
+    console.log('Error');
+    console.log(err);
+    console.log(JSON.stringify(err));
     res.send(body);
   });
 });
