@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
     this.publicKeyOptions.user.id = encoder.encode(this.publicKeyOptions.user.id);
     this.publicKeyOptions.challenge = encoder.encode(this.publicKeyOptions.challenge);
     this.publicKeyOptions.pubKeyCredParams.length = 1;
-    this.publicKeyOptions.rp.id = 'https://webauthn-signin.herokuapp.com';
+    this.publicKeyOptions.rp.id = 'webauthn-signin.herokuapp.com';
     this.publicKeyOptions = {
       ...this.publicKeyOptions
     };
