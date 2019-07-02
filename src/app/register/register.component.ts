@@ -64,7 +64,9 @@ export class RegisterComponent implements OnInit {
 
         this.devLog.push(JSON.stringify(publicKeyCredential));
         this.changeDetectorRef.markForCheck();
-        this.registerService.register(JSON.stringify(publicKeyCredential));
+        this.registerService.register(JSON.stringify(publicKeyCredential)).subscribe((data) => {
+          this.devLog.push(data);
+        });
       })
       .then((registrationResposne) => {
         this.devLog.push(JSON.stringify(registrationResposne));
