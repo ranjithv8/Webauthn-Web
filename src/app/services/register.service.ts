@@ -81,4 +81,14 @@ export class RegisterService {
        .replace(/\//g, '_')
        .replace(/=/g, '');
   }
+
+  strToBin(str) {
+    return Uint8Array.from(atob(str), c => c.charCodeAt(0));
+  }
+  
+  binToStr(bin) {
+    return btoa(new Uint8Array(bin).reduce(
+      (s, byte) => s + String.fromCharCode(byte), ''
+    ));
+  }
 }
