@@ -27,7 +27,7 @@ apiRouter.post('/register', (req, res, next) => {
     uri: `${API_CONTEXT}/finishRegistration`,
     body: req.body
   }
-  request.post(opts,(err, response, body) => {
+  request(opts,(err, response, body) => {
     console.log('response for finish Registration');
     console.log(response);
     console.log('Error');
