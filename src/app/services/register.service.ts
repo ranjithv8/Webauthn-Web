@@ -20,7 +20,11 @@ export class RegisterService {
   }
 
   register (params) {
-    return this.http.post(this.SERVER_CONTEXT + this.REGISTER_ENDPOINT, params);
+    try {
+      return this.http.post(this.SERVER_CONTEXT + this.REGISTER_ENDPOINT, params);
+    } catch (e) {
+      alert(e.message);
+    }
   }
 
   uint8ToBase64 (uint8) {
