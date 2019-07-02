@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname, '../dist')))
   .listen(PORT, () => { console.log(`Listening on ${ PORT }`);});
 
 apiRouter.get('/get-challenge', (req, res, next) => {
+  console.log('get challenge >>>>>>>>>>>>>>>>>>>>>>>');
   request.get(`${API_CONTEXT}/startRegistration`,(err, response, body) => {
     res.send(body);
   });
