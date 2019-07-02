@@ -32,12 +32,10 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    const encoder = new TextEncoder();
-    const decoder = new TextDecoder();
     this.publicKeyOptions.user.name = this.registerForm.get('username').value;
     this.publicKeyOptions.user.displayName = this.registerForm.get('firstname').value;
-    this.publicKeyOptions.user.id = encoder.encode(this.publicKeyOptions.user.id);
-    this.publicKeyOptions.challenge = encoder.encode(this.publicKeyOptions.challenge);
+    this.publicKeyOptions.user.id = this.registerService.bufferEncode(new Uint8Array(this.publicKeyOptions.user.id));
+    this.publicKeyOptions.challenge = this.registerService.bufferEncode(new Uint8Array(this.publicKeyOptions.challenge));
     this.publicKeyOptions.pubKeyCredParams.length = 1;
     this.publicKeyOptions.rp.id = 'webauthn-signin.herokuapp.com';
     this.publicKeyOptions = {
