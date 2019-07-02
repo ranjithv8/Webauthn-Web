@@ -60,6 +60,7 @@ export class RegisterComponent implements OnInit {
         response.clientDataJSON = this.registerService.bufferEncode(new Uint8Array(attestation.response.clientDataJSON));
         response.attestationObject = this.registerService.bufferEncode(new Uint8Array(attestation.response.attestationObject));
 
+        publicKeyCredential.extensions = attestation.getClientExtensionResults();
         publicKeyCredential.response = response;
 
         this.devLog.push(JSON.stringify(publicKeyCredential));
