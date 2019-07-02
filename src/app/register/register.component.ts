@@ -36,8 +36,8 @@ export class RegisterComponent implements OnInit {
     const decoder = new TextDecoder();
     this.publicKeyOptions.user.name = this.registerForm.get('username').value;
     this.publicKeyOptions.user.displayName = this.registerForm.get('firstname').value;
-    this.publicKeyOptions.user.id = this.registerService.strToBin(this.publicKeyOptions.user.id);
-    this.publicKeyOptions.challenge = this.registerService.strToBin(this.publicKeyOptions.challenge);
+    this.publicKeyOptions.user.id = encoder.encode(this.publicKeyOptions.user.id);
+    this.publicKeyOptions.challenge = encoder.encode(this.publicKeyOptions.challenge);
     this.publicKeyOptions.pubKeyCredParams.length = 1;
     this.publicKeyOptions.rp.id = 'webauthn-signin.herokuapp.com';
     this.publicKeyOptions = {
@@ -56,8 +56,8 @@ export class RegisterComponent implements OnInit {
         publicKeyCredential.type = attestation.type;
 
         const response: any = {};
-        response.clientDataJSON = this.registerService.binToStr(attestation.response.clientDataJSON);
-        response.attestationObject = this.registerService.binToStr(attestation.response.attestationObject);
+        response.clientDataJSON = decoder.decode(attestation.response.clientDataJSON);
+        response.attestationObject = this.registerService.bufferEncode(new Uint8Array(attestation.response.attestationObject));
 
         publicKeyCredential.clientExtensionResults = attestation.getClientExtensionResults();
         publicKeyCredential.response = response;

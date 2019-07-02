@@ -27,7 +27,7 @@ export class RegisterService {
           'Content-Type':  'application/json'
         })
       };
-      return this.http.post(this.SERVER_CONTEXT + this.REGISTER_ENDPOINT, params, httpOptions);
+      return this.http.post(this.SERVER_CONTEXT + this.REGISTER_ENDPOINT, params);
     } catch (e) {
       alert(e.message);
     }
@@ -80,15 +80,5 @@ export class RegisterService {
        .replace(/\+/g, '-')
        .replace(/\//g, '_')
        .replace(/=/g, '');
-  }
-
-  strToBin(str) {
-    return Uint8Array.from(atob(str), c => c.charCodeAt(0));
-  }
-  
-  binToStr(bin) {
-    return btoa(new Uint8Array(bin).reduce(
-      (s, byte) => s + String.fromCharCode(byte), ''
-    ));
   }
 }
