@@ -27,7 +27,7 @@ export class RegisterService {
           'Content-Type':  'application/json'
         })
       };
-      return this.http.post(this.SERVER_CONTEXT + this.REGISTER_ENDPOINT, params);
+      return this.http.post(this.SERVER_CONTEXT + this.REGISTER_ENDPOINT, params, httpOptions);
     } catch (e) {
       alert(e.message);
     }

@@ -23,7 +23,9 @@ apiRouter.get('/get-challenge', (req, res, next) => {
 });
 
 apiRouter.post('/register', (req, res, next) => {
+  console.log("Request");
   console.log(req.body);
+  console.log('***************************');
   request.post(`${API_CONTEXT}/finishRegistration`,{
     json:req.body
   },(err, response, body) => {
@@ -32,6 +34,7 @@ apiRouter.post('/register', (req, res, next) => {
     console.log('Error');
     console.log(err);
     console.log(JSON.stringify(err));
+    res.statusCode(response.statusCode);
     res.send(body);
   });
 });
