@@ -32,8 +32,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    const encoder = new TextEncoder(); 
-    const decoder = new TextDecoder();
+    const encoder = new TextEncoder();
     this.publicKeyOptions.user.name = this.registerForm.get('username').value;
     this.publicKeyOptions.user.displayName = this.registerForm.get('firstname').value;
     this.publicKeyOptions.user.id = encoder.encode(this.publicKeyOptions.user.id);
@@ -56,8 +55,8 @@ export class RegisterComponent implements OnInit {
         publicKeyCredential.type = attestation.type;
 
         const response: any = {};
-        response.clientDataJSON = decoder.decode(attestation.response.clientDataJSON);
-        response.attestationObject = decoder.decode(attestation.response.attestationObject);
+        response.clientDataJSON = this.registerService.bufferEncode(attestation.response.clientDataJSON);
+        response.attestationObject = this.registerService.bufferEncode(attestation.response.attestationObject);
 
         publicKeyCredential.clientExtensionResults = attestation.getClientExtensionResults();
         publicKeyCredential.response = response;
